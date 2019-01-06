@@ -1,0 +1,13 @@
+@model Cust
+
+<!-- Asp-action etiketi yardımcısı form için bir URL oluşturabilir -->
+
+<form asp-action="AddCust" method="POST">
+    <!-- asp-for oluşturduğun model e göre bağlantı -->
+    <label asp-for="Name">Müşteri Adı:</label>
+    <input asp-for="Name">
+
+    <label asp-for="Debt">Müşteri Borcu:</label>
+    <input asp-for="Debt">
+    <button type="submit">Ekle</button>
+</form>

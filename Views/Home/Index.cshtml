@@ -1,0 +1,109 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div>
+        <h1>Notlar</h1>
+
+<p>* Dependency injection (Bağımlılık Enjeksiyonu)</p>
+<p>* ASP.NET multitreading ve asenkron işler(tasks) için çok uygundur.</p>
+<p>* CsharpHelloWorld.csproj => npm (project.json) gibidir.</p>
+<p>* Task<IEnumerable<Cust>> : Müşteriler için yapılacaklar içeren görev listesi <br>
+  asenkron: db den gelen listenin ne zaman döneceğini bilmediğimizden, bu yapı seçilir. </p>
+<p>* Servis Sınıfları kullanır:<br>
+&nbsp; Kontrol daha sade olur, <br>
+&nbsp; test etmek kolaydır,<br>
+&nbsp; db değişiklik yapma kolaydır. <br><br>
+
+    
+&nbsp;    Uygulama: Mantık, DB, Uygulama katmanı olarak ayrılır, bunu 3-ties / n-tier mimari denir.<br>
+&nbsp;    Interface: (methodların ve özelliklerin) işi yapan sınıftan ayrılmasmı<br>
+&nbsp;&nbsp;        test etmeyi kolaylaştırır. </p>
+
+ <p>* Kontrolün yapısı methoduna servisi tanımladığımızda bağımlılık Enjeksiyonu yapmış oluruz. <br>
+&nbsp;    kontrolünü ilk satırına servis referansını(pointer) tutan değişkeni tanımlarız.<br>
+&nbsp;    sınıf ilk çalıştığında servisi kontrole enjekte etmiş oluruz. </p>
+
+<p>* Task methodlarında cevap gelene kadar beklememize yarayan await kelimesini kullanılır. </p>
+
+<p>* CustControler > ICustService bağlı hale geldi,<br>
+&nbsp;    fakat ICustService arayüzü CustService kullanmısı gerektiğini bilmiyor.3-ties<br>
+&nbsp;    Startup.cs sınıfında ki ConfigureServices methoduna bunu söylemek gerekmektedir.<br><br>
+
+&nbsp;    services.AddScoped<ICustService, CustService>();<br><br>
+
+&nbsp;&nbsp;        CustControler > ICustService > CustService<br><br>
+
+&nbsp;  CustControler > ICustService > <br>
+&nbsp;&nbsp;    Startup > ConfigureServices ><br>
+        AddScoped > CustService<br>
+</p>
+
+<p>ORM Ibject Relational Mapper <br>
+EF: <br>
+Db baglanma kolaylığı, <br>
+sorguları oluşturma ve tekrar obje haline getirme.3-ties.3-ties.<br>
+Farklı db lere bağlanma kolaylığı sağlar. 
+</p>
+
+<p>Db ile nasıl iletişime geçileceğini, okuma ve yazma işlemi veri tabanı kaynığı(context) sınıfı ile sağlanır.<br>
+Bağlantı yolu, appsettings.json içerisinde DataSource alanına yazılır.
+</p>
+
+<p> Migration(Göç) Oluşturma:<br><br>
+
+            1. [ dotnet ef migrations add tCust ]<br>
+            * Program.cs klasöründe olduğunuzdan emin olunuz.<br><br>
+
+            2. [ dotnet ef migrations list ] : Göç listesini <br><br>
+
+            3. [ dotnet ef database update ]<br><br>
+
+            4. [ dotnet ef database update CreateIdentitySchema ] <br>
+            Bu komut CreateIdentitySchema dan sonra oluşturulmuş <br>
+            tüm *göçlerin Down metodunu çalıştıracaktır.<br><br>
+
+            5. veri tabanını tamamen silmek istiyorsanız. <br>
+                [ dotnet ef database drop ] kullanabilirsiniz. <br>
+                Ardından [ dotnet ef database update ]<br>
+                yazdığınızda son Göç e kadar tüm göçler çalıştırılır.
+</p>
+
+<p>
+    docker pull microsoft/dotnet <br>
+
+    Dockerfile <br>
+
+FROM microsoft/dotnet:2.2-sdk AS build<br>
+COPY Customer/*.csproj ./app/Customer/<br>
+WORKDIR /app/Customer<br>
+RUN dotnet restore<br><br>
+
+COPY Customer/. ./Customer/<br>
+RUN dotnet publish -o out /p:PublishWithAspNetCoreTargetManifest="false"<br><br>
+
+FROM microsoft/dotnet:2.2-runtime AS runtime<br>
+ENV ASPNETCORE_URLS http://+:80<br>
+WORKDIR /app<br>
+COPY --from=build /app/Customer/out ./<br>
+ENTRYPOINT ["dotnet", "Customer.dll"]<br><br>
+
+    Image yaratmak: <br>
+    
+    docker build -t Customer .
+    docker run --name Customer_sample --rm -it -p 8080:80 Customer<br><br>
+
+    nginx/Dockerfile<br>
+    
+    
+
+
+
+</p>
+</div>
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+

@@ -1,0 +1,41 @@
+@model CustViewModel;
+
+@{
+    ViewData["Title"] = "Müşteriler";
+}
+
+<div class="panel panel-default cust-panel">
+  <div class="panel-heading">@ViewData["Title"]</div>
+
+  <table class="table table-hover">
+      <thead>
+          <tr>   
+              <td>Müşteri Adı</td>   
+              <td>Müşteri Borcu</td>      
+              <td>Müşteri Durumu</td>      
+              <td>İşlem</td>     
+          </tr>
+      </thead>
+
+      @foreach (var item in Model.Custs)
+      {
+          <tr>                    
+              <td>@item.Name</td>
+              <td>@item.Debt</td>
+              <td> @(item.Disabled ? "Pasif" : "Aktif" ) </td>
+              <td>
+                    <form asp-action="DelCust" method="POST">
+                    <button type="submit" class="dell-button" >Sil</button>
+                    <input type="hidden" name="ID" value="@item.ID">
+                </form>
+                  
+                 
+                  </td>
+          </tr>
+      }
+  </table>
+
+
+  <div class="panel-footer add-item-form">
+      @await Html.PartialAsync("AddCustPartial", new Cust())
+  </div>
