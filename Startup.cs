@@ -17,6 +17,28 @@ using Customer.Services;
 
 namespace Customer
 {
+    /*  Middleware
+
+    Middleware işlemleri uygulamamızın [ Startup ] sınıfı içinde yapılandırılır 
+        
+        HTTP isteklerine nasıl tepki verileceğini berileyen kısımdır.
+            
+            * hata durumunda ne yapılacak,
+            * kullanıcı kimliği doğrulaması yapılmışmı,
+            * belirli statik dosyaların erişimi , vb
+
+        ConfigureServices: 
+
+            * uygulamanın kullanacağı servisleri tanımlarız.
+
+        Configure:
+
+            * Middleware tanımlamalarını burada gerçekleştiririz.
+            * dotnet core da istek ve cevap hattını yakalamımıza yarar.
+            Düzeltme, yetkilendirme, raporlama, hata yakalama, ef migrotion hatalar,
+            vb işlemlerini yapabiliriz.
+     */
+    
     public class Startup
     {
         public Startup(IConfiguration configuration)
