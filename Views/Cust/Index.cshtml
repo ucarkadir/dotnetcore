@@ -20,17 +20,16 @@
       @foreach (var item in Model.Custs)
       {
           <tr>                    
-              <td>@item.Name</td>
+              <td class="name">@item.Name</td>
               <td>@item.Debt</td>
               <td> @(item.Disabled ? "Pasif" : "Aktif" ) </td>
               <td>
                     <form asp-action="DelCust" method="POST">
                     <button type="submit" class="dell-button" >Sil</button>
-                    <input type="hidden" name="ID" value="@item.ID">
+                    <input type="hidden" name="ID" value="@item.ID">                    
                 </form>
-                  
-                 
-                  </td>
+                <button type="submit" value="@item.ID" class="select-button">Seç</button>                  
+               </td>
           </tr>
       }
   </table>
@@ -38,4 +37,9 @@
 
   <div class="panel-footer add-item-form">
       @await Html.PartialAsync("AddCustPartial", new Cust())
+  </div>
+
+  
+  <div class="panel-footer upd-item-form" style="display:none" >
+      @await Html.PartialAsync("UpdCustPartial", new Cust())
   </div>

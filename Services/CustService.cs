@@ -30,6 +30,19 @@ namespace Customer.Services
             var saveResult = await _context.SaveChangesAsync();
             return saveResult == 1;
         }
+
+        public async Task<bool> UpdCustAsync(Cust updCust)
+        {
+            // update 
+            var item = await _context.tCust
+                .Where(x => x.ID == updCust.ID)
+                .SingleOrDefaultAsync();
+            
+            if(item == null) return false; 
+
+            var saveResult = await _context.SaveChangesAsync();
+            return saveResult == 1;
+        }
  
 
         public async Task<bool> DelCustAsync(Guid id)

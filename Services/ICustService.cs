@@ -10,6 +10,7 @@ namespace Customer.Services
         // "Müşteriler için yapılacak görevleri içerir"
         Task<IEnumerable<Cust>> GetCustItemsAsync();
         Task<bool> AddCustAsync(Cust newCust);
+        Task<bool> UpdCustAsync(Cust updCust);
         Task<bool> DelCustAsync(Guid id);
     }
 }

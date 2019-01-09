@@ -12,6 +12,7 @@ namespace Customer.Controllers
  // CustController => ICustService : Bağlı (Dependency injection) hale getirdik.
    public class CustController : Controller
    {
+       
                // ICustService referenasını(pointer) tutar
         private readonly ICustService _custService;
 
